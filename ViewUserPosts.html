@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>View User Posts</title>
+    </head>
+    <body>
+        <form action="ViewUserPosts.php" method="post">
+                <label for="users">Select a User&nbsp;</label>
+                <select name="users" id="users">
+                <?php
+                    $mysqli = new mysqli("mysql.eecs.ku.edu", "j487h218", "ohK4zeso", "j487h218");
+
+                /* check connection */
+            if ($mysqli->connect_error) {
+                printf("Connect failed: %s\n", $mysqli->connect_error);
+                exit();
+            }
+
+                    $query = "SELECT DISTINCT author_id FROM Posts";
+                    $result = $mysqli->query($query);
+                    if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                    echo "<option value=\"". $row['author_id'] ."\">" .
+                        $row['author_id'] . "</option>";
+                    }
+                    }
+                    ?>
+                </select>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+        </body>
+    </html>
